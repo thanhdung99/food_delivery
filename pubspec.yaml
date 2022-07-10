@@ -36,6 +36,11 @@ dependencies:
   google_maps_flutter: ^2.1.8
   geocoding: ^2.0.4
   geolocator: ^9.0.0
+  flutter_typeahead: ^3.2.7
+  google_maps_flutter_web: 0.3.0+2
+  flutter_google_places: ^0.3.0
+  permission_handler: ^8.3.0
+  webview_flutter: ^3.0.4
 #  persistent_bottom_nav_bar: ^4.0.2
 
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/base/custom_button.dart';
 import 'package:food_delivery/controllers/location_controller.dart';
+import 'package:food_delivery/pages/address/widgets/search_location_dialogue.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -20,7 +21,7 @@ class PickAddressMap extends StatefulWidget {
 
 class _PickAddressMapState extends State<PickAddressMap> {
   late LatLng _initialPosition;
-  late GoogleMapController _googleMapController;
+  late GoogleMapController _mapController;
   late CameraPosition _cameraPosition;
 
   @override
@@ -51,6 +52,12 @@ class _PickAddressMapState extends State<PickAddressMap> {
                 locationController.updatePosition(_cameraPosition, false);
               },
               onCameraMove: ((position) => _cameraPosition = position),
+              onMapCreated: (GoogleMapController controller) {
+                _mapController = controller;
+                if(!widget.fromAddress){
+
+                }
+              },
             ),
             Center(child: locationController.loading
                 ? const CircularProgressIndicator()
@@ -58,21 +65,26 @@ class _PickAddressMapState extends State<PickAddressMap> {
               height: 50, width: 50,),),
             Positioned(left: Dimensions.width20, right: Dimensions.width20,
               top: Dimensions.height45,
-              child: Container(height: 50,
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
-                decoration: BoxDecoration(color: AppColors.mainColor,
-                    borderRadius: BorderRadius.circular(Dimensions.radius20 / 2)
+              child: InkWell(
+                onTap: () =>Get.dialog(LocationDialogue(mapController: _mapController)),
+                child: Container(height: 50,
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                  decoration: BoxDecoration(color: AppColors.mainColor,
+                      borderRadius: BorderRadius.circular(Dimensions.radius20 / 2)
+                  ),
+                  child: Row(children: [
+                    Icon(Icons.location_on, size: 25, color:
+                    AppColors.yellowColor,),
+                    Expanded(child: Text(
+                      locationController.pickPlacemark.name ?? '',
+                      style: TextStyle(color: Colors.white,
+                          fontSize: Dimensions.font16),
+                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    )),
+                    SizedBox(width: Dimensions.width10,),
+                    Icon(Icons.search, size: 25, color: AppColors.yellowColor,)
+                  ],),
                 ),
-                child: Row(children: [
-                  Icon(Icons.location_on, size: 25, color:
-                  AppColors.yellowColor,),
-                  Expanded(child: Text(
-                    locationController.pickPlacemark.name ?? '',
-                    style: TextStyle(color: Colors.white,
-                        fontSize: Dimensions.font16),
-                    maxLines: 1, overflow: TextOverflow.ellipsis,
-                  ))
-                ],),
               ),
             ),
             Positioned(left: Dimensions.width20, right: Dimensions.width20,

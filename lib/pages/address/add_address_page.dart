@@ -65,7 +65,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             _contactPersonNumberController.text = '${userController.userModel?.phone}';
 
             if (Get.find<LocationController>().addressList.isEmpty) {
-              _addressController.text = Get.find<LocationController>().getUserAddress().address;
+              _addressController.text = Get.find<LocationController>().getUserAddress().address ?? '';
             }
           }
           return GetBuilder<LocationController>(builder: (locationController) {

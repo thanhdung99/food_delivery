@@ -24,8 +24,8 @@ class LocationRepo {
 
   String getUserAddress() {
     AddressModel address = AddressModel(
-      address: "S802 Vinhomes Grand Park, Long Thạnh Mỹ, Quận 9, Thành phố Hồ Chí Minh, Vietnam",
-      longitude: '10.8372192', latitude: '106.8306147', addressType: "home");
+        address: "S802 Vinhomes Grand Park, Long Thạnh Mỹ, Quận 9, Thành phố Hồ Chí Minh, Vietnam",
+        longitude: '10.8372192', latitude: '106.8306147', addressType: "home");
     if (!sharedPreferences.containsKey(AppConstants.USER_ADDRESS)) {
       sharedPreferences.setString(
           AppConstants.USER_ADDRESS, jsonEncode(address));
@@ -51,5 +51,15 @@ class LocationRepo {
   Future<Response> getZone(String lat, String lng) async {
     return await apiClient.getData(
         '${AppConstants.ZONE_URI}?lat=$lat&lng=$lng');
+  }
+
+  Future<Response> searchLocation(String text) async {
+    return await apiClient.getData(
+        '${AppConstants.SEARCH_LOCATION_URI}?search_text=$text');
+  }
+  Future<Response> setLocation(String placeID) async {
+    print('this URI: ' '${AppConstants.SEARCH_LOCATION_URI}?placeid=$placeID');
+    return await apiClient.getData(
+        '${AppConstants.PLACES_DETAILS_URI}?placeid=$placeID');
   }
 }
