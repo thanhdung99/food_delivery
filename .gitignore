@@ -32,6 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 
+
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -46,4 +47,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-**/ios
+
+/ios/Runner/AppDelegate.swift
